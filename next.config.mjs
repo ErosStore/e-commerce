@@ -12,5 +12,4 @@ const nextConfig = {
   basePath: '/eros-store',
   assetPrefix: '/eros-store/',
 }
-
 export default nextConfig
