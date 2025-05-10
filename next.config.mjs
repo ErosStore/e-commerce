@@ -9,6 +9,8 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  basePath: '/eros-store',
+  assetPrefix: '/eros-store/',
 }
 
 export default nextConfig
