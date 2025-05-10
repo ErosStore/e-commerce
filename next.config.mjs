@@ -8,6 +8,12 @@ const nextConfig = {
   },
   images: {
     unoptimized: true,
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'erosstore.github.io',
+      },
+    ],
   },
   basePath: '/eros-store',
   assetPrefix: '/eros-store/',
