@@ -15,7 +15,7 @@ export default function Footer() {
             <a
               href="https://armnelljackson.github.io/portfolio/"
               target="_blank"
-              className="inline-block border border-[#FF0B55] rounded-md px-3 py-1 mt-2 text-[#FF0B55] text-sm hover:bg-[#FF0B55] hover:text-black transition-all duration-300"
+              className="inline-block border border-[#FF0B55] rounded-xl px-3 py-1 mt-2 text-[#FF0B55] text-sm hover:bg-[#FF0B55] hover:text-black transition-all duration-300"
               rel="noreferrer"
             >
               Creado por: Armnell Gomez

@@ -23,7 +23,7 @@ export default function Filters({
           <div className="flex gap-2">
             <button
               onClick={() => setCategoryFilter("todo")}
-              className={`px-3 py-1 rounded-md text-[#FF0B55] font-medium border border-[#FF0B55] transition-all duration-300 hover:bg-[#FF0B55] hover:text-black ${
+              className={`px-3 py-1 rounded-xl text-[#FF0B55] font-medium border border-[#FF0B55] transition-all duration-300 hover:bg-[#FF0B55] hover:text-black ${
                 categoryFilter === "todo" ? "bg-[#FF0B55] text-black" : ""
               }`}
             >
@@ -31,7 +31,7 @@ export default function Filters({
             </button>
             <button
               onClick={() => setCategoryFilter("mujer")}
-              className={`px-3 py-1 rounded-md text-[#FF0B55] font-medium border border-[#FF0B55] transition-all duration-300 hover:bg-[#FF0B55] hover:text-black ${
+              className={`px-3 py-1 rounded-xl text-[#FF0B55] font-medium border border-[#FF0B55] transition-all duration-300 hover:bg-[#FF0B55] hover:text-black ${
                 categoryFilter === "mujer" ? "bg-[#FF0B55] text-black" : ""
               }`}
             >
@@ -39,7 +39,7 @@ export default function Filters({
             </button>
             <button
               onClick={() => setCategoryFilter("hombre")}
-              className={`px-3 py-1 rounded-md text-[#FF0B55] font-medium border border-[#FF0B55] transition-all duration-300 hover:bg-[#FF0B55] hover:text-black ${
+              className={`px-3 py-1 rounded-xl text-[#FF0B55] font-medium border border-[#FF0B55] transition-all duration-300 hover:bg-[#FF0B55] hover:text-black ${
                 categoryFilter === "hombre" ? "bg-[#FF0B55] text-black" : ""
               }`}
             >
@@ -52,7 +52,7 @@ export default function Filters({
             <select
               value={subcategoryFilter}
               onChange={(e) => setSubcategoryFilter(e.target.value)}
-              className="bg-black text-[#FF0B55] px-3 py-1 rounded-md border border-[#FF0B55] focus:outline-none focus:ring-2 focus:ring-[#CF0F47]"
+              className="bg-black text-[#FF0B55] px-3 py-1 rounded-xl border border-[#FF0B55] focus:outline-none focus:ring-2 focus:ring-[#CF0F47]"
             >
               {subcategories.map((subcategory) => (
                 <option key={subcategory} value={subcategory}>
