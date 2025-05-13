@@ -15,7 +15,13 @@ export default function ProductCard({ product, onClick }: ProductCardProps) {
       onClick={() => onClick(product)}
     >
       <div className="relative h-48 w-full">
-        <Image src={product.image || "/placeholder.svg"} alt={product.name} fill className="object-cover" />
+        <Image 
+          src={product.image || "/placeholder.svg"} 
+          alt={product.name} 
+          fill 
+          priority
+          className="object-cover" 
+        />
       </div>
       <div className="p-4 bg-[#000000]">
         <h3 className="text-[#FF0B55] font-medium text-lg truncate">{product.name}</h3>

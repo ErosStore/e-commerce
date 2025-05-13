@@ -29,7 +29,10 @@ export const metadata: Metadata = {
   title: "Eros Store | Tu Sex-Shop online",
   description:
     "Descubre nuestros productos para adultos de alta calidad. Lencería, juguetes y accesorios para tus fantasías más íntimas.",
-    generator: 'v0.dev'
+  generator: 'v0.dev',
+  icons: {
+    icon: '/favicon.ico',
+  }
 }
 
 export default function RootLayout({
