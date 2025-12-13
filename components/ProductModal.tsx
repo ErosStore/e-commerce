@@ -10,7 +10,7 @@ interface ProductModalProps {
 }
 
 export default function ProductModal({ product, onClose }: ProductModalProps) {
-  const numeroWhatsApp = '56931737981';
+  const numeroWhatsApp = '51929438206';
   const handleWhatsAppClick = () => {
     const message = encodeURIComponent(
       `Hola, vengo de ErosStore y me interesa el producto "${product.name}" con precio $${product.price}. ¿Podrían darme más información?`,
