@@ -16,7 +16,7 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
     ? product.images 
     : product.image 
     ? [product.image] 
-    : ["/eros-store/placeholder.svg"]
+    : ["/placeholder.svg"]
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
   const numeroWhatsApp = '51929438206';
