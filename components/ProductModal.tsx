@@ -16,7 +16,7 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
     ? product.images 
     : product.image 
     ? [product.image] 
-    : ["/placeholder.svg"]
+    : ["/e-commerce/placeholder.svg"]
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
   const numeroWhatsApp = '51929438206';

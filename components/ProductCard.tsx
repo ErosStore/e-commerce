@@ -16,7 +16,7 @@ export default function ProductCard({ product, onClick }: ProductCardProps) {
     >
       <div className="relative h-48 w-full">
         <Image 
-          src={product.image || "/placeholder.svg"} 
+          src={product.image || "/e-commerce/placeholder.svg"} 
           alt={product.name} 
           fill 
           priority
