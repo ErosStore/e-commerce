@@ -17,7 +17,7 @@ export const sampleProducts: Product[] = [
     price: 100,
     description:
       "Vibrador de lujo con 10 modos de vibración diferentes. Fabricado con silicona médica de alta calidad, suave al tacto y segura para el cuerpo. Recargable y resistente al agua para mayor versatilidad.",
-    image: "/VibradorElegance/VibradorElegancehotSale.png?height=300&width=300",
+    image: "/e-commerce/VibradorElegance/VibradorElegancehotSale.png?height=300&width=300",
     images: [              // Array de imágenes para el carrusel
       "/e-commerce/VibradorElegance/VibradorElegance-1.png?height=300&width=300",
       "/e-commerce/VibradorElegance/VibradorElegance-2.png?height=300&width=300",
