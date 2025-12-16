@@ -10,7 +10,7 @@ El proceso de compra es simple y directo:
 1.  El usuario explora los productos en el catálogo.
 2.  Al elegir un artículo, puede contactar directamente al vendedor a través de **WhatsApp** para finalizar la compra de manera privada.
 
-Siguiendo esta filosofía de simplicidad y cero almacenamiento de datos, **no existe una base de datos ni un panel de administrador**. Todos los productos y sus imágenes se gestionan directamente en el código fuente del proyecto. Esto elimina la necesidad de mantenimiento de bases de datos y asegura que toda la información de la tienda esté contenida dentro del propio repositorio.
+Siguiendo esta filosofía de simplicidad y cero almacenamiento de datos, **no existe una base de datos ni un panel de administrador**. Todos los productos y sus imágenes se gestionan directamente en el código fuente del proyecto. Esto elimina la necesidad de mantenimiento de bases de datos y asegura que toda la información de la tienda esté contenida dentro del propio repositorio. Para mantener esta organización, las imágenes se estructuran en subcarpetas dentro de `public/` (ej. `public/VibradorElegance/VibradorElegance-1.png`). Al referenciar estas imágenes en el código (especialmente con el componente `<Image>` de Next.js), se debe usar la ruta relativa desde `public/` (ej. `/VibradorElegance/VibradorElegance-1.png`), y Next.js se encargará automáticamente de añadir el `basePath` (`/e-commerce`) cuando sea necesario.
 
 ## 🚀 Stack Tecnológico
 
