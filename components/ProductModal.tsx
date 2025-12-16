@@ -1,9 +1,18 @@
 "use client"
 
-import { useState } from "react"
+import * as React from "react"
+import Autoplay from "embla-carousel-autoplay"
 import type { Product } from "@/types/product"
 import Image from "next/image"
-import { X, ChevronLeft, ChevronRight } from "lucide-react"
+import { X } from "lucide-react"
+
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
 
 interface ProductModalProps {
   product: Product
@@ -17,7 +26,6 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
     : product.image 
     ? [product.image] 
     : ["/e-commerce/placeholder.svg"]
-  const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
   const numeroWhatsApp = '51929438206';
   const handleWhatsAppClick = () => {
@@ -27,17 +35,10 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
     window.open(`https://wa.me/${numeroWhatsApp}?text=${message}`, "_blank")
   }
 
-  const goToPrevious = () => {
-    setCurrentImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1))
-  }
-
-  const goToNext = () => {
-    setCurrentImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1))
-  }
-
-  const goToImage = (index: number) => {
-    setCurrentImageIndex(index)
-  }
+  const plugin = React.useMemo(
+    () => Autoplay({ delay: 4000, stopOnInteraction: true }),
+    []
+  )
 
   return (
     <div className="rounded-lg fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-80">
@@ -52,58 +53,36 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
 
         <div className="flex flex-col md:flex-row">
           {/* Carrusel de imágenes del producto */}
-          <div className="md:w-1/2 p-6">
-            <div className="relative h-[300px] w-full group">
-              {/* Imagen actual */}
-              <div className="relative h-full w-full overflow-hidden rounded-lg">
-                <Image
-                  src={images[currentImageIndex]}
-                  alt={`${product.name} - Imagen ${currentImageIndex + 1}`}
-                  fill
-                  className="object-contain rounded-lg transition-opacity duration-300"
-                  key={currentImageIndex}
-                />
-              </div>
-
-              {/* Botones de navegación (solo si hay más de una imagen) */}
+          <div className="md:w-1/2 p-6 flex items-center justify-center">
+            <Carousel
+              plugins={[plugin]}
+              className="w-full max-w-md"
+              onMouseEnter={plugin.stop}
+              onMouseLeave={plugin.reset}
+            >
+              <CarouselContent>
+                {images.map((src, index) => (
+                  <CarouselItem key={index}>
+                    <div className="p-1">
+                      <div className="relative aspect-square">
+                        <Image
+                          src={src}
+                          alt={`${product.name} - Imagen ${index + 1}`}
+                          fill
+                          className="object-contain rounded-lg"
+                        />
+                      </div>
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
               {images.length > 1 && (
                 <>
-                  {/* Botón anterior */}
-                  <button
-                    onClick={goToPrevious}
-                    className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-[#CF0F47] p-2 rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100"
-                    aria-label="Imagen anterior"
-                  >
-                    <ChevronLeft size={24} />
-                  </button>
-
-                  {/* Botón siguiente */}
-                  <button
-                    onClick={goToNext}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-[#CF0F47] p-2 rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100"
-                    aria-label="Imagen siguiente"
-                  >
-                    <ChevronRight size={24} />
-                  </button>
-
-                  {/* Indicadores de puntos */}
-                  <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-2">
-                    {images.map((_, index) => (
-                      <button
-                        key={index}
-                        onClick={() => goToImage(index)}
-                        className={`h-2 w-2 rounded-full transition-all duration-300 ${
-                          index === currentImageIndex
-                            ? "bg-[#CF0F47] w-6"
-                            : "bg-white/50 hover:bg-white/70"
-                        }`}
-                        aria-label={`Ir a imagen ${index + 1}`}
-                      />
-                    ))}
-                  </div>
+                  <CarouselPrevious className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-[#CF0F47] border-none" />
+                  <CarouselNext className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-[#CF0F47] border-none" />
                 </>
               )}
-            </div>
+            </Carousel>
           </div>
 
           {/* Detalles del producto */}
