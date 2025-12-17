@@ -1,0 +1,89 @@
+"use client"
+
+import { useState } from "react"
+import Filters from "@/components/Filters"
+import ProductModal from "@/components/ProductModal"
+import type { Product } from "@/types/product"
+import ProductCard from "./ProductCard" // Importar ProductCard para usarlo directamente
+import AmazonProductCard from "./AmazonProductCard" // Importar AmazonProductCard
+
+// Interfaz para los productos de Amazon
+interface AmazonProduct {
+  id: string
+  name: string
+  image: string
+  price: string
+  currency: string
+  affiliateLink: string
+}
+
+// Lista de subcategorías disponibles
+const subcategories = [
+  "Todos",
+  "Consoladores",
+  "Vibradores",
+  "Dildos",
+  "Bondage",
+  "Lencería",
+  "Anillos",
+  "Lubricantes",
+  "Masturbadores",
+]
+
+interface ProductViewProps {
+  sampleProducts: Product[]
+  amazonProducts: AmazonProduct[]
+}
+
+export default function ProductView({ sampleProducts, amazonProducts }: ProductViewProps) {
+  // Estado para el filtro de categoría
+  const [categoryFilter, setCategoryFilter] = useState<string>("todo")
+
+  // Estado para el filtro de subcategoría
+  const [subcategoryFilter, setSubcategoryFilter] = useState<string>("Todos")
+
+  // Estado para el producto seleccionado en el modal
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
+
+  // Filtrar productos locales según los filtros seleccionados
+  const filteredProducts = sampleProducts.filter((product) => {
+    if (categoryFilter !== "todo" && product.category !== categoryFilter) {
+      return false
+    }
+    if (subcategoryFilter !== "Todos" && product.subcategory !== subcategoryFilter.toLowerCase()) {
+      return false
+    }
+    return true
+  })
+
+  return (
+    <>
+      <Filters
+        categoryFilter={categoryFilter}
+        setCategoryFilter={setCategoryFilter}
+        subcategoryFilter={subcategoryFilter}
+        setSubcategoryFilter={setSubcategoryFilter}
+        subcategories={subcategories}
+      />
+      
+      {/* Sección unificada de productos */}
+      <section className="container mx-auto px-4 py-8">
+        <h2 className="text-3xl font-serif font-bold text-[#CF0F47] mb-6 text-center">Nuestros Productos</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {/* Renderizar productos locales filtrados */}
+          {filteredProducts.map((product) => (
+            <ProductCard key={`local-${product.id}`} product={product} onClick={() => setSelectedProduct(product)} />
+          ))}
+
+          {/* Renderizar productos de Amazon */}
+          {amazonProducts.map((product) => (
+            <AmazonProductCard key={`amazon-${product.id}`} product={product} />
+          ))}
+        </div>
+      </section>
+
+      {/* Modal para productos locales */}
+      {selectedProduct && <ProductModal product={selectedProduct} onClose={() => setSelectedProduct(null)} />}
+    </>
+  )
+}

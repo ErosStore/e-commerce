@@ -69,15 +69,17 @@ eros-store/
 
 ## 🤝 Integración de Marketing de Afiliados de Amazon
 
-Esta sección detalla la implementación de productos de Amazon en la tienda a través de la API de Publicidad de Productos (PA-API) de Amazon, permitiendo el marketing de afiliados de forma segura y eficiente.
+Esta sección detalla la implementación de productos de Amazon en la tienda a través de la API de Publicidad de Productos (PA-API) de Amazon. La arquitectura está diseñada específicamente para ser compatible con un despliegue estático en **GitHub Pages**.
 
-### ⚙️ Cómo Funciona la Integración
+### ⚙️ Cómo Funciona la Integración: Arquitectura Estática
 
-La integración sigue una arquitectura segura para proteger tus credenciales de la API de Amazon:
+Debido a que el proyecto está configurado para una exportación estática (`output: 'export'`), no es posible utilizar rutas de API dinámicas que requieran un servidor. En su lugar, se utiliza el poder de los **React Server Components** de Next.js para obtener los datos durante el proceso de `build`.
 
-1.  **Frontend (Componentes de React):** Tu aplicación web solicita productos de Amazon a tu propio backend.
-2.  **API Route en Next.js (`/api/amazon`):** Esta ruta actúa como intermediario. Recibe la solicitud del frontend, utiliza tus credenciales secretas para llamar a la PA-API de Amazon, procesa la respuesta y envía los datos relevantes de vuelta al frontend. Esto asegura que tus credenciales de Amazon nunca se expongan al lado del cliente.
-3.  **Amazon Product Advertising API (PA-API):** La API de Amazon que proporciona datos de productos en tiempo real, incluyendo imágenes, precios y enlaces de afiliado.
+1.  **`app/page.tsx` (Server Component):** La página principal ahora es un componente de servidor asíncrono. Durante el `build`, ejecuta una función (`getAmazonProducts`) que llama directamente a la API de Amazon de forma segura (usando las credenciales de las variables de entorno). El resultado de esta llamada se "hornea" en el archivo HTML final.
+2.  **`components/ProductView.tsx` (Client Component):** Este componente recibe tanto los productos locales como los productos de Amazon (obtenidos por `app/page.tsx`) como propiedades. Se encarga de toda la lógica interactiva del lado del cliente, como los filtros y la apertura de modales, y de renderizar la parrilla unificada de productos.
+3.  **Seguridad:** Las credenciales de la API de Amazon se mantienen seguras, ya que solo se accede a ellas dentro del Server Component en el entorno del servidor durante el `build`. **Nunca se exponen al navegador del cliente.**
+
+Este enfoque garantiza un sitio 100% estático y rápido, compatible con GitHub Pages, aunque con una desventaja: los datos de los productos de Amazon (precios, stock) solo se actualizan cuando el sitio se vuelve a construir y desplegar.
 
 ### 🚀 Configuración y Uso
 
@@ -85,48 +87,27 @@ Para activar y utilizar la integración de Amazon, sigue estos pasos:
 
 #### 1. Obtener Credenciales de la API de Amazon
 
-Antes de nada, necesitas una cuenta activa en el programa [Amazon Associates](https://affiliate-program.amazon.com/). Una vez que tu cuenta esté aprobada y cumpla con los requisitos de actividad (Amazon suele requerir algunas ventas calificadas en un periodo para otorgar acceso completo a la PA-API), podrás generar tus credenciales:
+Necesitas una cuenta activa en el programa [Amazon Associates](https://affiliate-program.amazon.com/) con acceso a la PA-API para generar tus credenciales:
 
 *   **Access Key (Clave de Acceso)**
 *   **Secret Key (Clave Secreta)**
-*   **Partner Tag (Etiqueta de Asociado):** Tu ID de afiliado (ej. `tu-id-20`).
-
-Puedes encontrar estas credenciales en el panel de Amazon Associates, generalmente bajo la sección de "Herramientas" -> "Product Advertising API".
+*   **Partner Tag (Etiqueta de Asociado)**
 
 #### 2. Configurar Variables de Entorno
 
-Para proteger tus credenciales, deben almacenarse como variables de entorno:
+*   Crea un archivo `.env.local` en la raíz del proyecto.
+*   Copia el contenido de `.env.local.example` y rellena tus credenciales reales.
+*   **¡Importante!** Nunca subas tu archivo `.env.local` a Git.
 
-*   **Crea un archivo `.env.local`** en la raíz de tu proyecto (si no existe ya).
-*   **Copia el contenido de `.env.local.example`** a tu nuevo archivo `.env.local`.
-*   **Rellena tus credenciales** con los valores obtenidos de Amazon:
+#### 3. Modificar el Modo de Obtención de Datos en `app/page.tsx`
 
-    ```
-    # Credenciales de la API de Amazon
-    AMAZON_ACCESS_KEY="TU_ACCESS_KEY_VA_AQUÍ"
-    AMAZON_SECRET_KEY="TU_SECRET_KEY_VA_AQUÍ"
+El archivo `app/page.tsx` contiene la lógica para obtener los productos. Puedes alternar entre datos de prueba (mock) y datos reales:
 
-    # Tu etiqueta de afiliado de Amazon
-    AMAZON_ASSOCIATE_TAG="TU_ETIQUETA_DE_AFILIADO-20"
-    ```
-*   **¡Importante!** Nunca compartas tu archivo `.env.local` ni lo subas a un repositorio de Git. Este archivo ya está excluido por `.gitignore`.
+*   **Modo de Prueba (Activo por defecto):** La función `getAmazonProducts` dentro de `app/page.tsx` devuelve un array de productos simulados. Esto te permite trabajar en el frontend sin necesidad de credenciales válidas.
+*   **Modo Real:** Para conectar con la API de Amazon, debes modificar la función `getAmazonProducts` en `app/page.tsx`. La lógica para llamar a la API real utilizando el paquete `amazon-paapi` está comentada dentro del archivo. Simplemente comenta el retorno de los datos `mock` y descomenta el bloque de código de la API real.
 
-#### 3. Componentes y Visualización
+#### 4. Componentes de Visualización
 
-*   **`components/AmazonProductCard.tsx`:** Este es el componente que se encarga de mostrar un producto individual de Amazon. Recibe los datos del producto (imagen, nombre, precio, enlace de afiliado) y los renderiza en un formato de tarjeta. Al hacer clic, redirige al enlace de afiliado de Amazon.
-*   **`app/page.tsx`:** La página principal (`/`) de la aplicación ahora incluye una sección dedicada a "Productos de Amazon". Este componente realiza una llamada `fetch` a tu API Route (`/api/amazon`) para obtener los productos y los muestra utilizando `AmazonProductCard`.
-
-#### 4. La API Route (`app/api/amazon/route.ts`)
-
-Este archivo es el corazón de la integración. Está configurado para operar en dos modos:
-
-*   **Modo de Prueba (Activo por defecto):** Por defecto, la ruta API devuelve un conjunto de productos simulados (mock data). Esto te permite probar la visualización y el funcionamiento del frontend sin necesidad de tener credenciales de Amazon válidas configuradas o acceso completo a la PA-API.
-*   **Modo Real (Comentado):** El código para interactuar con la API real de Amazon PA-API (utilizando la librería `amazon-paapi`) está presente en el archivo, pero comentado.
-
-**Para cambiar al Modo Real:**
-
-1.  **Abre el archivo `app/api/amazon/route.ts`.**
-2.  **Comenta el bloque** que devuelve `mockAmazonProducts`.
-3.  **Descomenta el bloque de código** que se encarga de llamar a `createClient` y `client.searchItems`.
-4.  **Ajusta la región y el host** del cliente de Amazon (`host` y `region` en `createClient`) según el dominio de Amazon que desees usar (ej. `webservices.amazon.es` y `es` para España, `webservices.amazon.com.mx` y `mx` para México, etc.).
-5.  **Modifica las `Keywords`** en `searchParams` para buscar los productos deseados.
+*   **`components/ProductView.tsx`:** Es el componente principal que gestiona la visualización de los productos. Recibe la lista de productos locales y de Amazon y los muestra en una parrilla unificada.
+*   **`components/AmazonProductCard.tsx`:** Muestra un único producto de Amazon.
+*   **`components/ProductCard.tsx`:** Muestra un único producto local.
