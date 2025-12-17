@@ -1,8 +1,56 @@
 import { NextResponse } from 'next/server';
 import { createClient } from 'amazon-paapi';
 
+// --- MODO DE PRUEBA CON DATOS SIMULADOS (MOCK) ---
+// Para probar el frontend sin necesidad de credenciales reales de Amazon.
+const mockAmazonProducts = [
+  {
+    id: 'B08N5HR31W',
+    name: 'Echo Dot (4.ª generación) | Parlante inteligente con reloj y Alexa (MOCK)',
+    image: '/placeholder.svg',
+    price: '49.99',
+    currency: 'USD',
+    affiliateLink: '#',
+  },
+  {
+    id: 'B084DWCZ68',
+    name: 'Kindle Paperwhite – Ahora con una pantalla de 6.8” y luz cálida ajustable (MOCK)',
+    image: '/placeholder.svg',
+    price: '139.99',
+    currency: 'USD',
+    affiliateLink: '#',
+  },
+  {
+    id: 'B07VGRJDFY',
+    name: 'Fire TV Stick 4K, streaming de contenido multimedia (MOCK)',
+    image: '/placeholder.svg',
+    price: '49.99',
+    currency: 'USD',
+    affiliateLink: '#',
+  },
+    {
+    id: 'B08N5HR31C',
+    name: 'Echo Dot (4.ª generación) | Parlante inteligente con reloj y Alexa (MOCK)',
+    image: '/placeholder.svg',
+    price: '49.99',
+    currency: 'USD',
+    affiliateLink: '#',
+  },
+];
+
+export async function GET() {
+  // Devolvemos directamente los datos simulados para la prueba.
+  return NextResponse.json(mockAmazonProducts);
+}
+
+
+/*
+// --- MODO REAL CON API DE AMAZON ---
+// NOTA: Para activar la API real de Amazon, comenta el modo de prueba de arriba
+// y descomenta todo este bloque. Asegúrate de que tu archivo .env.local
+// esté correctamente configurado con tus credenciales.
+
 // Configuración del cliente de Amazon PA-API
-// Asegúrate de tener estas variables de entorno configuradas en tu archivo .env.local
 const client = createClient({
   accessKey: process.env.AMAZON_ACCESS_KEY || '',
   secretKey: process.env.AMAZON_SECRET_KEY || '',
@@ -14,11 +62,10 @@ const client = createClient({
 export async function GET() {
   try {
     // Definir los parámetros de búsqueda.
-    // Puedes cambiar las palabras clave y otros parámetros según tus necesidades.
     const searchParams = {
-      SearchIndex: 'All', // O 'Electronics', 'Books', etc.
-      Keywords: 'vibrator massager adult', // Palabras clave de búsqueda
-      ItemCount: 10, // Número de productos a devolver (máximo 10 para una sola llamada de ItemSearch)
+      SearchIndex: 'All',
+      Keywords: 'vibrator massager adult',
+      ItemCount: 10,
       Resources: [
         'Images.Primary.Large',
         'ItemInfo.Title',
@@ -50,3 +97,4 @@ export async function GET() {
     );
   }
 }
+*/
