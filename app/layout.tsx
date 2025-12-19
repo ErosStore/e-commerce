@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     "Descubre nuestros productos para adultos de alta calidad. Lencería, juguetes y accesorios para tus fantasías más íntimas.",
   generator: 'v0.dev',
   icons: {
-    icon: '/favicon.ico',
+    icon: '/e-commerce/favicon.ico',
   }
 }
 
