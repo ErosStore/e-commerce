@@ -133,3 +133,15 @@ Se utiliza una combinación de tres fuentes de Google Fonts para establecer una 
 -   **Playfair Display (Serif):** Asignada a la variable `font-serif`, se usa para los títulos principales y el logo. Aporta un toque de elegancia y clasicismo.
 -   **Inter (Sans-serif):** Es la fuente principal para el cuerpo del texto (`font-sans`). Su diseño limpio y moderno garantiza una excelente legibilidad en párrafos y descripciones.
 -   **Style Script (Cursive):** Utilizada a través de la variable `font-style-script`, esta fuente cursiva le da un toque personal y estilizado al nombre de "Eros Store" en el banner principal.
+
+## ⚡ Rendimiento y Optimizaciones
+
+### Carga de Imágenes (Lazy Loading)
+
+Este proyecto está configurado para una exportación estática (`output: 'export'`), lo que deshabilita el servidor de optimización de imágenes integrado de Next.js. Por este motivo, en `next.config.mjs` se establece la opción `images: { unoptimized: true }`.
+
+A pesar de esto, se aprovecha una característica clave del componente `<Image>` de Next.js para mejorar el rendimiento: **Lazy Loading** (carga perezosa).
+
+Para las listas de productos (especialmente los que cargan imágenes desde URLs externas de Amazon), se ha omitido intencionadamente la propiedad `priority`. Esto permite que Next.js cargue las imágenes únicamente cuando el usuario está a punto de verlas al hacer scroll, en lugar de cargar todas las imágenes de la página de una sola vez.
+
+Esta técnica **mejora significativamente el tiempo de carga inicial** y la experiencia del usuario, evitando que el navegador se sature al intentar descargar docenas de imágenes simultáneamente.

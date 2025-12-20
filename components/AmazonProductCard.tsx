@@ -17,7 +17,6 @@ export default function AmazonProductCard({ product }: AmazonProductCardProps) {
           src={product.image} 
           alt={product.name} 
           fill 
-          priority
           className="object-contain" 
         />
       </CardContent>
