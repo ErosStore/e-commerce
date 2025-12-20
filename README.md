@@ -111,3 +111,25 @@ El archivo `app/page.tsx` contiene la lógica para obtener los productos. Puedes
 *   **`components/ProductView.tsx`:** Es el componente principal que gestiona la visualización de los productos. Recibe la lista de productos locales y de Amazon y los muestra en una parrilla unificada.
 *   **`components/AmazonProductCard.tsx`:** Muestra un único producto de Amazon.
 *   **`components/ProductCard.tsx`:** Muestra un único producto local.
+
+## 🎨 Diseño de la Aplicación
+
+El diseño de Eros Store busca ser **moderno, elegante y discreto**, utilizando una paleta de colores oscuros con acentos vibrantes y una tipografía cuidadosamente seleccionada para crear una experiencia de usuario atractiva y fácil de leer.
+
+### Paleta de Colores
+
+La aplicación utiliza un tema oscuro como base para transmitir una sensación de intimidad y sofisticación.
+
+-   **Fondo Principal (`#000000` - Negro):** Utilizado como el color de fondo general de la aplicación, proporcionando un lienzo limpio y sin distracciones.
+-   **Texto Principal (`#FFFFFF` - Blanco):** Asegura la máxima legibilidad sobre el fondo oscuro.
+-   **Acento Primario (`#CF0F47`):** Un rosa intenso y vibrante que se utiliza para elementos clave como los títulos principales (`h2`) y componentes interactivos como la barra de scroll, capturando la atención del usuario.
+-   **Acento Secundario/Hover (`#FF0B55`):** Un fucsia aún más brillante, definido como `primary.light`, que se usa para estados `hover` y otros efectos visuales, añadiendo dinamismo a la interfaz.
+-   **Fondo Secundario (`#1a1a1a`):** Un gris oscuro que se emplea en elementos como el fondo de la barra de scroll (`track`), creando una separación sutil con el fondo principal.
+
+### Tipografía
+
+Se utiliza una combinación de tres fuentes de Google Fonts para establecer una jerarquía visual clara y aportar personalidad a la marca.
+
+-   **Playfair Display (Serif):** Asignada a la variable `font-serif`, se usa para los títulos principales y el logo. Aporta un toque de elegancia y clasicismo.
+-   **Inter (Sans-serif):** Es la fuente principal para el cuerpo del texto (`font-sans`). Su diseño limpio y moderno garantiza una excelente legibilidad en párrafos y descripciones.
+-   **Style Script (Cursive):** Utilizada a través de la variable `font-style-script`, esta fuente cursiva le da un toque personal y estilizado al nombre de "Eros Store" en el banner principal.

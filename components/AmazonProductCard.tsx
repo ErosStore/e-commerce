@@ -32,7 +32,7 @@ export default function AmazonProductCard({ product }: AmazonProductCardProps) {
           className="object-contain" 
         />
       </CardContent>
-      <CardFooter className="p-4 bg-[#CF0F47] flex flex-col items-start">
+      <CardFooter className="p-4 bg-[#CF0F47] flex items-center justify-center">
         <h3 className="text-[#000000] font-medium text-lg truncate w-full">{product.name}</h3>
         <p className="text-white text-base mt-2">{product.currency} {product.price}</p>
       </CardFooter>
