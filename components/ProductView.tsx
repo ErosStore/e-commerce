@@ -5,17 +5,8 @@ import Filters from "@/components/Filters"
 import ProductModal from "@/components/ProductModal"
 import type { Product } from "@/types/product"
 import ProductCard from "./ProductCard" // Importar ProductCard para usarlo directamente
+import type { AmazonProduct } from "@/types/amazon_product"
 import AmazonProductCard from "./AmazonProductCard" // Importar AmazonProductCard
-
-// Interfaz para los productos de Amazon
-interface AmazonProduct {
-  id: string
-  name: string
-  image: string
-  price: string
-  currency: string
-  affiliateLink: string
-}
 
 // Lista de subcategorías disponibles
 const subcategories = [

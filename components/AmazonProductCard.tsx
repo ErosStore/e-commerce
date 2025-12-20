@@ -1,17 +1,6 @@
-"use client"
-
 import Image from "next/image"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
-
-// Definir la interfaz para los datos del producto de Amazon
-interface AmazonProduct {
-  id: string
-  name: string
-  image: string
-  price: string
-  currency: string
-  affiliateLink: string
-}
+import type { AmazonProduct } from "@/types/amazon_product"
 
 interface AmazonProductCardProps {
   product: AmazonProduct
@@ -34,7 +23,6 @@ export default function AmazonProductCard({ product }: AmazonProductCardProps) {
       </CardContent>
       <CardFooter className="p-4 bg-[#CF0F47] flex items-center justify-center">
         <h3 className="text-[#000000] font-medium text-lg truncate w-full">{product.name}</h3>
-        <p className="text-white text-base mt-2">{product.currency} {product.price}</p>
       </CardFooter>
     </Card>
   )
