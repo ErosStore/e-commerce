@@ -38,13 +38,16 @@ export default function ProductView({ sampleProducts, amazonProducts }: ProductV
 
   // Filtrar productos locales según los filtros seleccionados
   const filteredProducts = sampleProducts.filter((product) => {
-    if (categoryFilter !== "todo" && product.category !== categoryFilter) {
-      return false
-    }
-    if (subcategoryFilter !== "Todos" && product.subcategory !== subcategoryFilter.toLowerCase()) {
-      return false
-    }
-    return true
+    const categoryMatch = categoryFilter === "todo" || product.category === categoryFilter
+    const subcategoryMatch = subcategoryFilter === "Todos" || product.subcategory.toLowerCase() === subcategoryFilter.toLowerCase()
+    return categoryMatch && subcategoryMatch
+  })
+
+  // Filtrar productos de Amazon según los filtros seleccionados
+  const filteredAmazonProducts = amazonProducts.filter((product) => {
+    const categoryMatch = categoryFilter === "todo" || product.category === categoryFilter
+    const subcategoryMatch = subcategoryFilter === "Todos" || product.subcategory.toLowerCase() === subcategoryFilter.toLowerCase()
+    return categoryMatch && subcategoryMatch
   })
 
   return (
@@ -66,8 +69,8 @@ export default function ProductView({ sampleProducts, amazonProducts }: ProductV
             <ProductCard key={`local-${product.id}`} product={product} onClick={() => setSelectedProduct(product)} />
           ))}
 
-          {/* Renderizar productos de Amazon */}
-          {amazonProducts.map((product) => (
+          {/* Renderizar productos de Amazon filtrados */}
+          {filteredAmazonProducts.map((product) => (
             <AmazonProductCard key={`amazon-${product.id}`} product={product} />
           ))}
         </div>
